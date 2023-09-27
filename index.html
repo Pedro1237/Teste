@@ -59,6 +59,9 @@
     </div>
     <div id="map"></div>
     
+    <!-- Adicione um botão para falar dicas de segurança -->
+    <button onclick="falarDicasDeSeguranca();">Falar Dicas de Segurança</button>
+    
     <script>
         let mapa;
         let servicoDirecoes;
@@ -86,11 +89,27 @@
                 (resposta, status) => {
                     if (status === 'OK') {
                         renderizadorDirecoes.setDirections(resposta);
+                        falarDicasDeSeguranca(); // Chama a função de falar após calcular a rota
                     } else {
                         window.alert('Falha ao calcular a rota devido a ' + status);
                     }
                 }
             );
+        }
+
+        // Função para falar dicas de segurança
+        function falarDicasDeSeguranca() {
+            const dicasDeSeguranca = "Mantenha os cintos de segurança apertados. Evite o uso de dispositivos móveis durante a condução. Observe os limites de velocidade. Esteja atento aos pedestres. Evite áreas de alto risco.";
+            
+            const synth = window.speechSynthesis;
+            const utterance = new SpeechSynthesisUtterance(dicasDeSeguranca);
+
+            // Escolha a voz (opcional)
+            const voices = synth.getVoices();
+            utterance.voice = voices[0]; // Altere para a voz desejada
+
+            // Inicie a fala
+            synth.speak(utterance);
         }
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBrFztJyTD5mH-UqSd8-fmWfx2kNzWbjio&callback=iniciarMapa&libraries=&v=weekly" async></script>
